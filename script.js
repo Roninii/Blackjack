@@ -47,14 +47,15 @@ newGameButton.addEventListener('click', function() {
   gameStarted = true;
   gameOver = false;
   playerWon = false;
-  
+  tie = false;
+
   deck = createDeck();
   shuffleDeck(deck);
 
   // Deal cards
   dealerCards = [getNextCard(), getNextCard()];
   playerCards = [getNextCard(), getNextCard()];
-  
+
   // Adjust button visibility, show status
   newGameButton.style.display = 'none';
   hitButton.style.display = 'inline';
@@ -117,28 +118,28 @@ function showStatus() {
     textArea.innerText = 'Welcome to Blackjack!';
     return;
   }
-  
+
   let dealerCardString = '';
   for (let i=0; i < dealerCards.length; i++) {
     dealerCardString += getCardString(dealerCards[i]) + '\n';
     }
-    
+
   let playerCardString = '';
   for (let i=0; i < playerCards.length; i++) {
     playerCardString += getCardString(playerCards[i]) + '\n';
   }
-  
+
   updateScores();
-  
-  textArea.innerText = 
+
+  textArea.innerText =
   'Dealer has:\n' +
   dealerCardString +
   '(score: ' + dealerScore + ')\n\n' +
-  
+
   'Player has:\n' +
   playerCardString +
   '(score: ' + playerScore + ')\n\n';
-  
+
   if (gameOver) {
     if (playerWon) {
       textArea.innerText += "YOU WIN!";
@@ -207,7 +208,7 @@ function getCardNumericValue(card) {
 // Check for end of game
 function checkForEndOfGame() {
   updateScores();
-  
+
   if (gameOver) {
     // let dealer take cards
     while(dealerScore < playerScore
@@ -217,7 +218,7 @@ function checkForEndOfGame() {
       updateScores();
         }
   }
-  
+
   if (playerScore > 21) {
     playerWon = false;
     gameOver = true;
@@ -227,7 +228,7 @@ function checkForEndOfGame() {
     gameOver = true;
   }
   else if (gameOver) {
-    
+
     if (playerScore > dealerScore) {
       playerWon = true;
     }
